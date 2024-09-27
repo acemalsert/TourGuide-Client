@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Yönlendirme için
+import { useNavigate } from 'react-router-dom'; 
+import "./destinations.css"
 
 const Destinations = () => {
   const [destinations, setDestinations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // useNavigate hook'u
+  const navigate = useNavigate();
 
   const fetchDestinations = async () => {
     try {
@@ -15,8 +16,8 @@ const Destinations = () => {
       setLoading(false);
       console.log(res);
     } catch (error) {
-      setError(error.message); // Hata varsa kaydet
-      setLoading(false); // Yükleme tamamlandı
+      setError(error.message); 
+      setLoading(false); 
     }
   };
 
@@ -27,24 +28,31 @@ const Destinations = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  // Butona tıklandığında detay sayfasına git
   const goToDetails = (id) => {
     navigate(`/destinations/${id}`);
   };
 
+  //TODO : Bir arama cubugu eklenmeli
+
   return (
-    <div>
+    <div className="destinations">
       <h2>Destinations</h2>
-      <ul>
+      <div className="row">
         {destinations.map((destination) => (
-          <li key={destination.id}>
-            <h3>{destination.name}</h3>
-            <p>{destination.description}</p>
-            {/* Detay sayfasına gitmek için buton */}
-            <button onClick={() => goToDetails(destination.id)}>Go to Details</button>
-          </li>
+          <div className="card" style={{ width: '18rem', margin: '10px' }} key={destination.id}>
+            <img className="card-img-top" src="https://www.bizevdeyokuz.com/wp-content/uploads/agra-tac-mahal.jpg" alt="Destination Image" /> {/* Burada destination'a ait bir image url eklemelisin */}
+            <div className="card-body">
+              <h5 className="card-title">{destination.name}</h5>
+              <p className="card-text">
+                {destination.description}
+              </p>
+              <button className="btn btn-primary" onClick={() => goToDetails(destination.id)}>
+                Go to Details
+              </button>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
