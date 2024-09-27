@@ -26,12 +26,11 @@ const DestinationDetail = () => {
 
   const handleDelete = async () => {
     const confirmed = window.confirm('Are you sure you want to delete this destination?');
-    if (!confirmed) return; // Eğer kullanıcı onaylamazsa işlem iptal edilir.
+    if (!confirmed) return; 
 
     try {
       await axios.post(`http://localhost:5008/api/Destination/DeleteDestination`, { id });
       alert('Destination deleted successfully');
-      // Silme işleminden sonra yönlendirme veya state güncellemesi yapabilirsiniz
     } catch (error) {
       console.error(error);
       alert('Error deleting destination');
@@ -45,8 +44,6 @@ const DestinationDetail = () => {
         id: destination.id,
         name: destination.name,
         description: destination.description,
-        latitude: destination.latitude,
-        longitude: destination.longitude,
       });
       setIsEditing(false);
       alert('Destination updated successfully');

@@ -1,0 +1,16 @@
+.select-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+#map {
+    width: 100%;
+    height: 800px;
+}
+
+.form-select {
+    width: auto !important;
+    margin-right: 20px;
+}
+
