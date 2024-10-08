@@ -11,8 +11,17 @@ const Destinations = () => {
   const navigate = useNavigate();
 
   const fetchDestinations = async () => {
+    setLoading(true); 
     try {
-      const res = await axios.get(`http://localhost:5008/api/Destination/GetAllDestinations`);
+      const token = localStorage.getItem('token'); 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      };
+  
+      const res = await axios.get(`http://localhost:5008/api/Destination/GetAllDestinations`, config);
+
       setDestinations(res.data);
       setLoading(false);
     } catch (error) {
@@ -20,6 +29,7 @@ const Destinations = () => {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchDestinations();
