@@ -1,16 +1,52 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import registerPageImage from '../../assets/tour-guide-login.jpeg';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Basit bir register işlemi simülasyonu
-    alert(`User registered: ${username}`);
+    
+    if (password !== repeatPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    const requestBody = {
+      fullName: username,
+      email: email,
+      password: password,
+      confirmPassword: repeatPassword,
+      role: "user" 
+    };
+
+    try {
+      const response = await fetch('http://localhost:5008/api/auth/Register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        // Kayıt başarılı olursa dashboard sayfasına yönlendir
+        alert('Registration successful!');
+        navigate('/');
+      } else {
+        // Hata durumunda kullanıcıyı bilgilendir
+        const errorData = await response.json();
+        alert(`Registration failed: ${errorData.message || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred during registration.');
+    }
   };
 
   return (
@@ -35,6 +71,7 @@ const Register = () => {
                               className="form-control"
                               value={username}
                               onChange={(e) => setUsername(e.target.value)} 
+                              required
                             />
                             <label className="form-label" htmlFor="form3Example1c">Your Name</label>
                           </div>
@@ -49,6 +86,7 @@ const Register = () => {
                               className="form-control"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
+                              required
                             />
                             <label className="form-label" htmlFor="form3Example3c">Your Email</label>
                           </div>
@@ -63,6 +101,7 @@ const Register = () => {
                               className="form-control"
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
+                              required
                             />
                             <label className="form-label" htmlFor="form3Example4c">Password</label>
                           </div>
@@ -72,13 +111,14 @@ const Register = () => {
                           <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                           <div data-mdb-input-init className="form-outline flex-fill mb-0">
                             <input 
-                              type="password-repeat" 
+                              type="password" 
                               id="form3Example4c2" 
                               className="form-control"
                               value={repeatPassword}
                               onChange={(e) => setRepeatPassword(e.target.value)}
+                              required
                             />
-                            <label className="form-label" htmlFor="form3Example4c">Repeat Password</label>
+                            <label className="form-label" htmlFor="form3Example4c2">Repeat Password</label>
                           </div>
                         </div>
 
@@ -96,7 +136,7 @@ const Register = () => {
                     </div>
 
                     <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                      <img src={registerPageImage}
                         className="img-fluid" alt="Sample image" />
                     </div>
                   </div>
