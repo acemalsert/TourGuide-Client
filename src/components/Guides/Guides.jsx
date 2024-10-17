@@ -19,7 +19,6 @@ const GuidesComponent = () => {
                 },
             };
             const res = await axios.get(`http://localhost:5008/api/Auth/GetAllGuides`, config);
-            debugger
             setGuides(res.data);
             setLoading(false);
         } catch (error) {
@@ -35,9 +34,8 @@ const GuidesComponent = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    // TODO :  Burası da detaya gidecek şekilde güncellenecek
     const goToDetails = (id) => {
-        alert('user id' + id);
+        navigate(`/guides/${id}`);
     };
 
     return (
