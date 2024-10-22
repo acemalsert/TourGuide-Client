@@ -12,50 +12,48 @@ import VectorSource from 'ol/source/Vector';
 import { Style as OLStyle } from 'ol/style';
 import { Circle as CircleStyle, Fill, Stroke, RegularShape } from 'ol/style';
 import './map.css';
-
-const destinations = [
-  { id: 1, name: 'Paris', coordinates: [2.3522, 48.8566] },
-  { id: 2, name: 'New York', coordinates: [-74.0060, 40.7128] },
-  { id: 3, name: 'Tokyo', coordinates: [139.6917, 35.6895] },
-];
+import axios from 'axios';
 
 const MapComponent = () => {
+  const [destinations, setDestinations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [map, setMap] = useState(null);
   const [baseLayer, setBaseLayer] = useState('OSM');
+  const [vectorLayer, setVectorLayer] = useState(null); // Vector layer state
+
+  const fetchDestinations = async () => {
+    setLoading(true); 
+    try {
+      const token = localStorage.getItem('token'); 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      };
+  
+      const res = await axios.get(`http://localhost:5008/api/Destination/GetAllDestinations`, config);
+      debugger
+      setDestinations(res.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
+    fetchDestinations();
+
     const tileLayer = new TileLayer({
       source: new OSM(),
     });
 
-    const vectorLayer = new VectorLayer({
-      source: new VectorSource({
-        features: destinations.map(destination => {
-          const feature = new Feature({
-            geometry: new Point(fromLonLat(destination.coordinates)),
-          });
-
-          feature.setStyle(
-            new OLStyle({
-              image: new RegularShape({
-                points: 3,
-                radius: 10,
-                fill: new Fill({ color: 'red' }),
-                stroke: new Stroke({ color: 'black', width: 2 }),
-              }),
-            })
-          );
-
-          return feature;
-        }),
-      }),
-    });
-
     const mapInstance = new Map({
       target: 'map',
-      layers: [tileLayer, vectorLayer],
+      layers: [tileLayer],
       view: new View({
-        center: fromLonLat([0, 0]),
+        center: fromLonLat([0, 0]), // Başlangıç merkez noktası
         zoom: 2,
       }),
     });
@@ -68,6 +66,45 @@ const MapComponent = () => {
   }, []);
 
   useEffect(() => {
+    if (!map || destinations.length === 0) return;
+    const features = destinations.map(destination => {
+      const feature = new Feature({
+        geometry: new Point(fromLonLat([destination.longitude, destination.latitude])),
+      });
+
+      //feature.set('id', destination.id);
+
+      feature.setStyle(
+        new OLStyle({
+          image: new RegularShape({
+            points: 3, 
+            radius: 10,
+            fill: new Fill({ color: 'red' }),
+            stroke: new Stroke({ color: 'black', width: 2 }),
+          }),
+        })
+      );
+
+      return feature;
+    });
+
+   
+    if (vectorLayer) {
+      map.removeLayer(vectorLayer);
+    }
+
+    const newVectorLayer = new VectorLayer({
+      source: new VectorSource({
+        features,
+      }),
+    });
+
+    map.addLayer(newVectorLayer);
+    setVectorLayer(newVectorLayer); 
+  }, [map, destinations]);
+
+
+  useEffect(() => {
     if (!map) return;
 
     let source;
@@ -77,16 +114,12 @@ const MapComponent = () => {
       source = new XYZ({
         url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
       });
-    } else if (baseLayer === 'Topographic') {
-      source = new XYZ({
-        url: 'https://{a-c}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png',
-        attributions: ['&copy; Thunderforest, OpenStreetMap contributors'],
-      });
-    }
+    } 
 
     map.getLayers().getArray()[0].setSource(source);
 
   }, [baseLayer, map]);
+
 
   return (
     <div>
