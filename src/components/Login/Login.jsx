@@ -21,6 +21,7 @@ const Login = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('refreshToken', response.data.refreshToken);
         localStorage.setItem('expiration', response.data.expiration);
+        localStorage.setItem('userId', response.data.id)
         navigate('/'); 
       }
     } catch (error) {
