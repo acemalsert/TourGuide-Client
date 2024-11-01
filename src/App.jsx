@@ -12,6 +12,7 @@ import DestinationDetail from './components/DestinationDetail/DestinationDetail.
 import Guides from './components/Guides/Guides.jsx';
 import GuideDetail from './components/GuideDetail/GuideDetail.jsx';
 import Profile from './components/Profile/Profile.jsx';
+import CreateDestination from './components/CreateDestination/CreateDestination.jsx';
 
 function App() {
   const panoramaImage = 'https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/field.jpg';
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/destinations" element={<Destinations />} />
+        <Route path="/createDestination" element = {<CreateDestination/>}></Route>
         <Route path="/guides" element={<Guides/>} />
         <Route path = "/guides/:id" element ={<GuideDetail />}></Route>
         <Route path="/about" element={<About />} />

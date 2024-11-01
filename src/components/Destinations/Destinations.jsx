@@ -29,7 +29,6 @@ const Destinations = () => {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     fetchDestinations();
@@ -64,18 +63,23 @@ const Destinations = () => {
       </div>
 
       <div className="row mt-4">
-        {filteredDestinations.map((destination) => (
-          <div className="card" style={{ width: '18rem', margin: '10px' }} key={destination.id}>
-            <img className="card-img-top" src="https://www.bizevdeyokuz.com/wp-content/uploads/agra-tac-mahal.jpg" alt="Destination" />
-            <div className="card-body">
-              <h5 className="card-title">{destination.name}</h5>
-              <p className="card-text">{destination.description}</p>
-              <button className="btn btn-primary" onClick={() => goToDetails(destination.id)}>
-                Go to Details
-              </button>
+        {filteredDestinations.map((destination) => {
+          // Base64 stringini kontrol et ve URL formatına dönüştür
+          const imageSrc = destination.imageData ? `data:image/jpeg;base64,${destination.imageData}` : 'default_image_url.jpg';
+
+          return (
+            <div className="card" style={{ width: '18rem', margin: '10px' }} key={destination.id}>
+              <img className="card-img-top" src={imageSrc} alt={destination.name} />
+              <div className="card-body">
+                <h5 className="card-title">{destination.name}</h5>
+                <p className="card-text">{destination.description}</p>
+                <button className="btn btn-primary" onClick={() => goToDetails(destination.id)}>
+                  Go to Details
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
