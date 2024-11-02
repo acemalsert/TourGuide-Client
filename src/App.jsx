@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import MapComponent from './components/Map/Map.jsx';
@@ -14,26 +14,38 @@ import GuideDetail from './components/GuideDetail/GuideDetail.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import CreateDestination from './components/CreateDestination/CreateDestination.jsx';
 
-function App() {
-  const panoramaImage = 'https://pchen66.github.io/Panolens/examples/asset/textures/equirectangular/field.jpg';
+// Layout bileşeni: Navbar'ı ve Footer'ı konum bazlı gösterir
+const Layout = ({ children }) => {
+  const location = useLocation();
+  const showNavbar = !['/login', '/register'].includes(location.pathname);
 
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<MapComponent />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/destinations" element={<Destinations />} />
-        <Route path="/createDestination" element = {<CreateDestination/>}></Route>
-        <Route path="/guides" element={<Guides/>} />
-        <Route path = "/guides/:id" element ={<GuideDetail />}></Route>
-        <Route path="/about" element={<About />} />
-        <Route path="/panoramaTest" element={<Panorama image={panoramaImage} />} />
-        <Route path="/destinations/:id" element={<DestinationDetail />} />
-        <Route path="/profile" element = {<Profile/>}></Route>
-      </Routes>
+    <>
+      {showNavbar && <Navbar />}
+      {children}
       <Footer />
+    </>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<MapComponent />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/destinations" element={<Destinations />} />
+          <Route path="/createDestination" element={<CreateDestination />} />
+          <Route path="/guides" element={<Guides />} />
+          <Route path="/guides/:id" element={<GuideDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/panoramaTest" element={<Panorama />} />
+          <Route path="/destinations/:id" element={<DestinationDetail />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

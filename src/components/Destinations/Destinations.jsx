@@ -62,13 +62,13 @@ const Destinations = () => {
         </div>
       </div>
 
-      <div className="row mt-4">
+      <div className="row mt-4 justify-content-center">
         {filteredDestinations.map((destination) => {
           // Base64 stringini kontrol et ve URL formatına dönüştür
           const imageSrc = destination.imageData ? `data:image/jpeg;base64,${destination.imageData}` : 'default_image_url.jpg';
 
           return (
-            <div className="card" style={{ width: '18rem', margin: '10px' }} key={destination.id}>
+            <div className="card" style={{ width: '18rem', margin: '10px', padding:'0px' }} key={destination.id}>
               <img className="card-img-top" src={imageSrc} alt={destination.name} />
               <div className="card-body">
                 <h5 className="card-title">{destination.name}</h5>

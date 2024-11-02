@@ -9,47 +9,43 @@ const Navbar = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('expiration');
-    navigate('/login'); 
+    navigate('/login');
   };
 
-  const isLoggedIn = !!localStorage.getItem('token'); 
+  const isLoggedIn = !!localStorage.getItem('token');
 
   return (
-    <div className='container'>
-      <div className='navbar'>
-        <nav>
-          <ul>
-            <li><Link to="/destinations">Destinations</Link></li>
-            <li><Link to="/guides">Guides</Link></li>
-            <li><Link to="/">Map</Link></li>
-            <li><Link to="/about">About</Link></li>
-
-            {isLoggedIn ? (
-              <>
-                <li>
-                  <Link to="/profile"> 
-                    <img 
-                      src="../src/assets/default_profile_photo.webp" 
-                      alt="Profile"
-                      className="profile-photo"
-                    />
-                  </Link>
-                </li>
-                <li>
-                  <button onClick={handleSignOut} className="btn btn-danger">
-                    Sign Out
-                  </button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li><Link to="/login">Login</Link></li>
-                <li><Link to="/register">Register</Link></li>
-              </>
-            )}
-          </ul>
-        </nav>
-      </div>
+    <div className='navbar'>
+      <nav className='nav-container'>
+        <ul className='nav-links'>
+          <li><Link to="/"><img className="nav-tour-guide-logo-img" src="../../public/tour-guide-logo.jpeg" alt="" /></Link></li>
+          <li><Link to="/destinations">Destinations</Link></li>
+          <li><Link to="/guides">Guides</Link></li>
+          <li><Link to="/">Map</Link></li>
+          <li><Link to="/about">About</Link></li>
+        </ul>
+        <div className="nav-right"> {/* Sağ taraf için bir div ekliyoruz */}
+          {isLoggedIn ? (
+            <div className='nav-links'>
+              <Link to="/profile">
+                <img 
+                  src="../src/assets/default_profile_photo.webp" 
+                  alt="Profile"
+                  className="profile-photo"
+                />
+              </Link>
+              <Link onClick={handleSignOut}>
+                Sign Out
+              </Link>
+            </div>
+          ) : (
+            <div className='nav-links'>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </div>
+          )}
+        </div>
+      </nav>
     </div>
   );
 };

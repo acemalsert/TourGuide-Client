@@ -1,0 +1,20 @@
+.destination-detail {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .destination-detail h4,
+  .destination-detail h5 {
+    color: #495057;
+  }
+  
+  .destination-detail p {
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+  
+  .img-fluid {
+    border-radius: 10px;
+  }
+  

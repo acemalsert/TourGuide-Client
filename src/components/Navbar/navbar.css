@@ -1,60 +1,68 @@
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 80%;
-    margin: auto;
-  }
-
-  .navbar ul {
-    display: flex;
-  }
-
-  .container .navbar {
-    justify-content: space-between;
-  }
-
-  .navbar ul li {
-    list-style-type: none;
-  }
-  
-  .container .navbar ul li {
-    padding: 10px;
-    margin: 0 10px;
-  }
-  
-  .navbar a {
-    color: var(--nav-text);
-    font-weight: bold;
-  }
-  
-  .navbar a:hover {
-    color: var(--secondary-color);
-  }
-
-  @media media-type and (media-feature-rule) {
-    /* CSS rule */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-  @media screen and (min-width: 390px) and (max-width: 767px) {
-    .container {
-      height: 100%;
-    }
-  
-    .container .navbar {
-      flex-direction: column;
-    }
-  }
+.navbar {
+  width: 100%;
+  background-color: #2A9D8F;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+}
 
-  .profile-photo {
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    margin-right: 10px; 
-  }
+.nav-container {
+  width: 100%;
+  max-width: 1200px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
 
-  .profile-photo:hover {
-    transform: scale(1.1); 
-  }
-  
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: #FFFFFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+  background-color: #1E7D72;
+}
+
+.profile-photo {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.btn {
+  background-color: #E76F51;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #C54C3C;
+}
+
+.nav-tour-guide-logo-img{
+  width: 32px;
+  height: 32px;
+}
