@@ -13,7 +13,6 @@ const DestinationDetail = () => {
   const fetchDestination = async () => {
     try {
       const res = await axios.get(`http://localhost:5008/api/Destination/GetDestinationById/${id}`);
-      debugger
       setDestination(res.data);
       setLoading(false);
     } catch (error) {
@@ -64,4 +63,3 @@ const DestinationDetail = () => {
 };
 
 export default DestinationDetail;
-

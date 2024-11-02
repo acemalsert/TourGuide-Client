@@ -22,7 +22,6 @@ const Navbar = () => {
           <li><Link to="/destinations">Destinations</Link></li>
           <li><Link to="/guides">Guides</Link></li>
           <li><Link to="/">Map</Link></li>
-          <li><Link to="/about">About</Link></li>
         </ul>
         <div className="nav-right"> {/* Sağ taraf için bir div ekliyoruz */}
           {isLoggedIn ? (
