@@ -21,7 +21,7 @@ const Navbar = () => {
           <li><Link to="/"><img className="nav-tour-guide-logo-img" src="../../public/tour-guide-logo.jpeg" alt="" /></Link></li>
           <li><Link to="/destinations">Destinations</Link></li>
           <li><Link to="/guides">Guides</Link></li>
-          <li><Link to="/">Map</Link></li>
+          <li><Link to="addresses">Addresses</Link></li>
         </ul>
         <div className="nav-right"> {/* Sağ taraf için bir div ekliyoruz */}
           {isLoggedIn ? (

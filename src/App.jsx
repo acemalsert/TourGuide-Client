@@ -12,6 +12,8 @@ import Guides from './components/Guides/Guides.jsx';
 import GuideDetail from './components/GuideDetail/GuideDetail.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import CreateDestination from './components/CreateDestination/CreateDestination.jsx';
+import Addresses from './components/Addresses/Addresses.jsx';
+import Home from './components/Home/Home.jsx';
 
 // Layout bileşeni: Navbar'ı ve Footer'ı konum bazlı gösterir
 const Layout = ({ children }) => {
@@ -32,7 +34,6 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<MapComponent />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/destinations" element={<Destinations />} />
@@ -42,6 +43,8 @@ function App() {
           <Route path="/panoramaTest" element={<Panorama />} />
           <Route path="/destinations/:id" element={<DestinationDetail />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/addresses" element={<Addresses/>}></Route>
+          <Route path="/" element={<Home/>}></Route>
         </Routes>
       </Layout>
     </Router>

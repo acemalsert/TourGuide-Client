@@ -3,48 +3,20 @@ import 'ol/ol.css';
 import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import XYZ from 'ol/source/XYZ';
 import { fromLonLat } from 'ol/proj';
 import { Feature } from 'ol';
 import Point from 'ol/geom/Point';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import { Style as OLStyle } from 'ol/style';
-import { Circle as CircleStyle, Fill, Stroke, RegularShape } from 'ol/style';
+import { RegularShape, Fill, Stroke } from 'ol/style';
 import './map.css';
-import axios from 'axios';
 
-const MapComponent = () => {
-  const [destinations, setDestinations] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const MapComponent = ({ lat, lon }) => {
   const [map, setMap] = useState(null);
-  const [baseLayer, setBaseLayer] = useState('OSM');
-  const [vectorLayer, setVectorLayer] = useState(null); // Vector layer state
-
-  const fetchDestinations = async () => {
-    setLoading(true); 
-    try {
-      const token = localStorage.getItem('token'); 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        },
-      };
-  
-      const res = await axios.get(`http://localhost:5008/api/Destination/GetAllDestinations`, config);
-      debugger
-      setDestinations(res.data);
-      setLoading(false);
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
-    }
-  };
+  const [vectorLayer, setVectorLayer] = useState(null);
 
   useEffect(() => {
-    fetchDestinations();
-
     const tileLayer = new TileLayer({
       source: new OSM(),
     });
@@ -53,8 +25,8 @@ const MapComponent = () => {
       target: 'map',
       layers: [tileLayer],
       view: new View({
-        center: fromLonLat([0, 0]), // Başlangıç merkez noktası
-        zoom: 2,
+        center: fromLonLat([lon, lat]), // Harita merkezini lat ve lon prop'larına göre ayarlayın
+        zoom: 10,
       }),
     });
 
@@ -63,79 +35,42 @@ const MapComponent = () => {
     return () => {
       mapInstance.setTarget(null);
     };
-  }, []);
+  }, [lat, lon]);
 
   useEffect(() => {
-    if (!map || destinations.length === 0) return;
-    const features = destinations.map(destination => {
-      const feature = new Feature({
-        geometry: new Point(fromLonLat([destination.longitude, destination.latitude])),
-      });
+    if (!map) return;
 
-      //feature.set('id', destination.id);
-
-      feature.setStyle(
-        new OLStyle({
-          image: new RegularShape({
-            points: 3, 
-            radius: 10,
-            fill: new Fill({ color: 'red' }),
-            stroke: new Stroke({ color: 'black', width: 2 }),
-          }),
-        })
-      );
-
-      return feature;
+    const feature = new Feature({
+      geometry: new Point(fromLonLat([lon, lat])),
     });
 
-   
+    feature.setStyle(
+      new OLStyle({
+        image: new RegularShape({
+          points: 3,
+          radius: 10,
+          fill: new Fill({ color: 'red' }),
+          stroke: new Stroke({ color: 'black', width: 2 }),
+        }),
+      })
+    );
+
     if (vectorLayer) {
       map.removeLayer(vectorLayer);
     }
 
     const newVectorLayer = new VectorLayer({
       source: new VectorSource({
-        features,
+        features: [feature],
       }),
     });
 
     map.addLayer(newVectorLayer);
-    setVectorLayer(newVectorLayer); 
-  }, [map, destinations]);
+    setVectorLayer(newVectorLayer);
 
+  }, [map, lat, lon]);
 
-  useEffect(() => {
-    if (!map) return;
-
-    let source;
-    if (baseLayer === 'OSM') {
-      source = new OSM();
-    } else if (baseLayer === 'Satellite') {
-      source = new XYZ({
-        url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
-      });
-    } 
-
-    map.getLayers().getArray()[0].setSource(source);
-
-  }, [baseLayer, map]);
-
-
-  return (
-    <div>
-      <div className="select-container">
-        <select
-          className="form-select"
-          value={baseLayer}
-          onChange={e => setBaseLayer(e.target.value)}
-        >
-          <option value="OSM">OpenStreetMap</option>
-          <option value="Satellite">Satellite</option>
-        </select>
-      </div>
-      <div id="map"></div>
-    </div>
-  );
+  return <div id="map" style={{ height: '500px', width: '100%' }}></div>;
 };
 
 export default MapComponent;
