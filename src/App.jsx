@@ -14,6 +14,7 @@ import Profile from './components/Profile/Profile.jsx';
 import CreateDestination from './components/CreateDestination/CreateDestination.jsx';
 import Addresses from './components/Addresses/Addresses.jsx';
 import Home from './components/Home/Home.jsx';
+import CreateAddress from  './components/CreateAddress/CreateAddress.jsx';
 
 // Layout bileşeni: Navbar'ı ve Footer'ı konum bazlı gösterir
 const Layout = ({ children }) => {
@@ -44,6 +45,7 @@ function App() {
           <Route path="/destinations/:id" element={<DestinationDetail />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/addresses" element={<Addresses/>}></Route>
+          <Route path="/create-address" element={<CreateAddress />} />
           <Route path="/" element={<Home/>}></Route>
         </Routes>
       </Layout>

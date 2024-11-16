@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "./addresses.css";
 
+
 export default function Addresses() {
     const [addresses, setAddresses] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -38,7 +39,7 @@ export default function Addresses() {
     return (
         <div className='container mt-4 mb-4'>
             <div className="d-flex justify-content-end mb-3">
-                <button type="button" className="btn btn-success">
+                <button type="button" className="btn btn-success" onClick={() => navigate('/create-address')}>
                     Add Address
                 </button>
             </div>

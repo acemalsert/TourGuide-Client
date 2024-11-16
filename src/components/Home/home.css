@@ -60,6 +60,7 @@
     background: url('your-image-path.jpg') center center/cover;
     text-align: center;
     color: black;
+    background-color: gray;
   }
   
   .hero h1 {

@@ -39,10 +39,10 @@ const GuidesComponent = () => {
     };
 
     return (
-        <div className="container">
-            <div className='row mt-4'>
+        <div className="guides">
+            <div className='row mt-4 justify-content-center'>
                 {guides.map((guide) => (
-                    <div className="card" style={{ width: '18rem' }} key={guide.id}>
+                    <div className="card" style={{ width: '18rem', margin: '10px', padding:'0px' }} key={guide.id}>
                         <img className="card-img-top" src="https://i.dr.com.tr/pimages/Content/Uploads/ArtistImages/artist__260259.jpg" alt="Guide" />
                         <div className="card-body">
                             <h5 className="card-title">{guide.fullName}</h5>
