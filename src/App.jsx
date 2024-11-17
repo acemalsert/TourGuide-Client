@@ -16,6 +16,8 @@ import Addresses from './components/Addresses/Addresses.jsx';
 import Home from './components/Home/Home.jsx';
 import CreateAddress from  './components/CreateAddress/CreateAddress.jsx';
 import Categories from './components/Categories/Categories.jsx';
+import Countries from './components/Countries/Countries.jsx';
+import CreateCountry from './components/CreateCountry/CreateCountry.jsx';
 
 // Layout bileşeni: Navbar'ı ve Footer'ı konum bazlı gösterir
 const Layout = ({ children }) => {
@@ -48,6 +50,8 @@ function App() {
           <Route path="/addresses" element={<Addresses/>}></Route>
           <Route path="/create-address" element={<CreateAddress />} />
           <Route path="/categories" element={<Categories />} />
+          <Route path="/countries" element={<Countries />} />
+          <Route path="/create-country" element={<CreateCountry />} />
           <Route path="/" element={<Home/>}></Route>
         </Routes>
       </Layout>
