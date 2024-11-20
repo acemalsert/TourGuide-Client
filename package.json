@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^3.0.0",
+    "@stripe/stripe-js": "^5.2.0",
     "aframe": "^1.6.0",
     "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.5",
     "ol": "^10.1.0",
     "panolens": "^0.12.1",
     "react": "^18.3.1",

@@ -1,0 +1,19 @@
+.success-page {
+    text-align: center;
+    margin-top: 50px;
+    color: #28a745;
+  }
+  
+  .success-icon {
+    margin-bottom: 20px;
+  }
+  
+  .success-message {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .success-description {
+    font-size: 1.2rem;
+    color: #555;
+  }
